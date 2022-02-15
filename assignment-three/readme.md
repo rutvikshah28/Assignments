@@ -35,5 +35,5 @@ rustc taskTwo.rs
 ```
 ### Side Note:
 * I had fun learning Rust with this assignment.
-* Initially, I though I would get to play with Rust but it was the other way around.
+* Initially, I thought I would get to play with Rust but it was the other way around.
 * However I got the hang of it after diving into the docs and bugging Lakin.
