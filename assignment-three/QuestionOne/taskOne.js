@@ -1,13 +1,14 @@
 /*
     Task One:
-        1. Create a 3+ state union type -- 2+ states contain a value
-        2. Build constructors, discriminated union, typeguards and other access methods
-        3. fold and/or match
-        -- Extensions
-        4. map, apply, other list like helper methods
-        5. Partial match with a default value
-
-        Example: ProgressOption<T> = NotStarted | Finished<T> | Progress<{val: number}> | Paused<{val: number}>;
+    Chosen type is the one given in examples.
+    Implementations are straight forward and have been documented with the use of console logs after function calls.
+    Functions made:
+        1. match
+        2. fold
+        3. map
+        4. find
+        5. isEmpty
+        6. contains
 */
 var notStarted = function () {
     return { __tag: "notStarted" };
