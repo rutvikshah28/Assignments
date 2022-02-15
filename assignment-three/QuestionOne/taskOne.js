@@ -25,12 +25,20 @@ var progress = function (p) {
         val: { val: p }
     };
 };
+var paused = function (b) {
+    return {
+        __tag: "paused",
+        val: b
+    };
+};
 var isNotStarted = function (p) { return p.__tag === "notStarted"; };
 var isFinished = function (p) { return p.__tag === "finished"; };
 var isProgress = function (p) { return p.__tag === "progress"; };
+var isPaused = function (p) { return p.__tag === "paused"; };
 var ns = notStarted();
 var fin = finished(100);
 var prog = progress(25);
+var psd = paused(true);
 var fold = function (p, d) {
     if (isNotStarted(p)) {
         return d();
@@ -41,9 +49,12 @@ var fold = function (p, d) {
     if (isProgress(p)) {
         return p.val.val;
     }
+    if (isPaused(p)) {
+        return p.val;
+    }
 };
 console.log("Fold - Progress(25): ", fold(prog, function () { return "default"; }));
-var match = function (p, f, g, d) {
+var match = function (p, f, g, h, d) {
     if (isNotStarted(p)) {
         return d();
     }
@@ -53,11 +64,15 @@ var match = function (p, f, g, d) {
     else if (isProgress(p)) {
         return g(p.val.val);
     }
+    else if (isPaused(p)) {
+        return h(p.val);
+    }
 };
-console.log("NotStarted: ", match(ns, function (t) { return t + "%. Task is finished."; }, function (t) { return t.toString() + "%. Task is in progress."; }, function () { return "0%. Task has not started yet."; }));
-console.log("Progress: ", match(prog, function (t) { return t + "%. Task is finished."; }, function (t) { return t.toString() + "%. Task is in progress."; }, function () { return "0%. Task has not started yet."; }));
-console.log("Finished: ", match(fin, function (t) { return t + "%. Task is finished."; }, function (t) { return t.toString() + "%. Task is in progress."; }, function () { return "0%. Task has not started yet."; }));
-var map = function (p, f, g) {
+console.log("NotStarted: ", match(ns, function (t) { return t + "%. Task is finished."; }, function (t) { return t.toString() + "%. Task is in progress."; }, function (t) { return t === true ? "Task is paused" : "Task is not paused"; }, function () { return "0%. Task has not started yet."; }));
+console.log("Progress: ", match(prog, function (t) { return t + "%. Task is finished."; }, function (t) { return t.toString() + "%. Task is in progress."; }, function (t) { return t === true ? "Task is paused" : "Task is not paused"; }, function () { return "0%. Task has not started yet."; }));
+console.log("Finished: ", match(fin, function (t) { return t + "%. Task is finished."; }, function (t) { return t.toString() + "%. Task is in progress."; }, function (t) { return t === true ? "Task is paused" : "Task is not paused"; }, function () { return "0%. Task has not started yet."; }));
+console.log("Paused: ", match(psd, function (t) { return t + "%. Task is finished."; }, function (t) { return t.toString() + "%. Task is in progress."; }, function (t) { return t === true ? "Task is paused" : "Task is not paused"; }, function () { return "0%. Task has not started yet."; }));
+var map = function (p, f, g, h) {
     if (isNotStarted(p)) {
         return notStarted();
     }
@@ -67,8 +82,11 @@ var map = function (p, f, g) {
     else if (isProgress(p)) {
         return progress(g(p.val.val));
     }
+    else if (isPaused(p)) {
+        return paused(h(p.val));
+    }
 };
-console.log("map: ", map(fin, function (val) { return val + 200; }, function (val) { return val + 111; }));
+console.log("map: ", map(fin, function (val) { return val + 200; }, function (val) { return val + 111; }, function (val) { return !val; }));
 //find for arrays in js returns undefined if nothing is found
 var find = function (p, val) {
     if (isFinished(p)) {
@@ -76,6 +94,9 @@ var find = function (p, val) {
     }
     else if (isProgress(p)) {
         return p.val.val === val ? p.val : undefined;
+    }
+    else if (isPaused(p)) {
+        return p.val === val ? p.val : undefined;
     }
     return undefined;
 };
@@ -88,6 +109,9 @@ var contains = function (p, val) {
     }
     else if (isProgress(p)) {
         return p.val.val === val;
+    }
+    else if (isPaused(p)) {
+        return p.val === val;
     }
     else {
         return false;
