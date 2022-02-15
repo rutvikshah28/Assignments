@@ -4,6 +4,10 @@
         2. Type chosen: Option<T> from Rust : https://doc.rust-lang.org/stable/rust-by-example/std/option.html?highlight=option#option
         3. As per some of our codebase's usage of Option, I decided to implement a small program where there user inputs affect our option
            and at the end I will make use of the match and map functions to return an output to the user.
+        4. It is a very short I/O program where the user chooses a number and then chooses an operation to perform on it.
+        5. The user has the option to choose nothing and if the user enters something unexpected we handle it with the none state.
+        6. We then take the user's choices into consideration and perform the desired operation.
+        7. We finally print the output back to the user. 
 */
 
 use std::io;
