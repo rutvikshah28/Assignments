@@ -123,7 +123,7 @@ console.log("The Absolute value after mapping is: \n", map(
 
 //Filter: Tree<A> -> A -> Tree<A>
 // Filter returns a tree without the element 'a' present in it.
-const filter = <A>(tree: Tree<A>, a: A): Tree<A> => {
+const filter = <A>(tree: Tree<A>, a: A): Tree<A> | undefined => {
     // As a basic implementation, we will remove element a from our tree
     if(tree.__tag === "branch"){
         const left = filter(tree.left, a);
@@ -159,7 +159,7 @@ console.log(
 
 //Zip: Tree<A> -> Tree<B> -> Tree<(A | B)[]>
 // Zip combines the elements of both trees if they are on the same level and retuns a new tree.
-const zip = <A, B>(treeOne: Tree<A>, treeTwo: Tree<B>): Tree<(A | B)[]> => {
+const zip = <A, B>(treeOne: Tree<A>, treeTwo: Tree<B>): Tree<(A | B)[]> | undefined => {
     if(treeOne.__tag === "branch" && treeTwo.__tag === "branch"){
         const left = zip(treeOne.left, treeTwo.left);
         const right = zip(treeOne.right, treeTwo.right);
