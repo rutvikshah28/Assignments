@@ -38,8 +38,9 @@ node taskTwo.js
 path: /QuestionThree
 ```
 
-
-
+1. As per the question, I have implemented a tree type which builds from Branch or Leaf classes.
+2. I have implemented the functions - size, max, depth, map, filter, zip.
+3. Please follow the commands below to build, run and test the tree.
 
 ```bash
 tsc taskThree.ts
