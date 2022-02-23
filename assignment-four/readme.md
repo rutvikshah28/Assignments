@@ -21,22 +21,27 @@ node taskOne.js
 path: /QuestionTwo
 ```
 
-1. This task has been written in Rust.
-2. I have utilized the Option type in Rust along with its match and map functions.
-3. The goal was to develop a short Command Line program that takes in user inputs and computes the result based on them.
-4. I make use of Option since the user can input something incorrect or choose to input nothing.
-5. Please follow the commands below to build and run the program and test it out!
+1. As per the question, I have implemented the Form interface.
+2. I have created a type for formValues which is used to map into errors.
+3. For the formErrors, I have created an error type which maps the keys from formValues into strings.
+4. Further I have wrapped the Error Type with a Partial to make the errors optional so we don't have to write the errors for every case.
+5. Please follow the commands below to build and test the code.
 
 ```bash
-rustc taskTwo.rs
-./taskTwo
+tsc taskTwo.ts
+node taskTwo.js
 ```
-### Side Note:
-* I had fun learning Rust with this assignment.
-* Initially, I thought I would get to play with Rust but it was the other way around.
-* However I got the hang of it after diving into the docs and bugging Lakin.
 
 ## Question 3
 
 ```bash
 path: /QuestionThree
+```
+
+
+
+
+```bash
+tsc taskThree.ts
+node taskThree.js
+```
