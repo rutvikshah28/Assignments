@@ -43,6 +43,6 @@ path: /QuestionThree
 3. Please follow the commands below to build, run and test the tree.
 
 ```bash
-tsc taskThree.ts
-node taskThree.js
+tsc *.ts
+node test.js
 ```
