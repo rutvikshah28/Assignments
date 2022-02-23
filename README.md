@@ -1,4 +1,4 @@
-# Assignments
+# [Assignments](https://github.com/rutvikshah28/Assignments/)
 Assignments for Vivid Theory
 
 ## [Assignment 1](https://github.com/rutvikshah28/Assignments/tree/main/assignment-one)
