@@ -1,6 +1,6 @@
 {
   "name": "task-three-tree-lib",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "This is a simple tree library made for the purpose of an assignment. It is written in typescript and contains main functionality of trees.",
   "main": "taskThree.ts",
   "scripts": {
