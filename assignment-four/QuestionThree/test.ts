@@ -74,7 +74,7 @@ try{
 
     console.log("working on filter()");
     try{
-        console.log(Tree.filter(smallerTree, 2))
+        console.log(Tree.filter((x: number) => x >= 0, smallerTree))
         console.log("filter() -- passed")
     }
     catch(err){

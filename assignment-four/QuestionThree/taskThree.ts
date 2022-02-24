@@ -20,6 +20,12 @@ export class Branch<A> {
     }
 };
 
+const isLeaf = <A>(leaf: Tree<A>): leaf is Leaf<A> => 
+    leaf.__tag === "leaf";
+
+const isBranch = <A>(branch: Tree<A>): branch is Branch<A> => 
+    branch.__tag === "branch";
+
 const l: Tree<number> = new Leaf(1);
 const b: Tree<number> = new Branch(l, l);         
 const testTree: Tree<number> = new Branch(b, new Branch(new Leaf(-10), new Leaf(-30)));
@@ -88,13 +94,13 @@ export const map = <A, B>(tree: Tree<A>, f:(value: A)=>B): Tree<B> => {
     }
 }
 
-//Filter: Tree<A> -> A -> Tree<A>
+//Filter: f:(a:A->boolean) -> Tree<A> -> Tree<A>
 // Filter returns a tree without the element 'a' present in it.
-export const filter = <A>(tree: Tree<A>, a: A): Tree<A> | undefined => {
+export const filter = <A>(f: (a: A) => boolean ,tree: Tree<A>): Tree<A> | undefined => {
     // As a basic implementation, we will remove element a from our tree
     if(tree.__tag === "branch"){
-        const left = filter(tree.left, a);
-        const right = filter(tree.right, a);
+        const left = filter(f, tree.left);
+        const right = filter(f, tree.right);
         if(left){
             if(right){
                 return new Branch(left, right);
@@ -110,7 +116,7 @@ export const filter = <A>(tree: Tree<A>, a: A): Tree<A> | undefined => {
         }
     }
     else{
-        if(tree.value === a)
+        if(f(tree.value))
             return undefined;
         else{
             return tree;
