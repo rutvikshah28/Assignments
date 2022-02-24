@@ -26,11 +26,6 @@ const isLeaf = <A>(leaf: Tree<A>): leaf is Leaf<A> =>
 const isBranch = <A>(branch: Tree<A>): branch is Branch<A> => 
     branch.__tag === "branch";
 
-const l: Tree<number> = new Leaf(1);
-const b: Tree<number> = new Branch(l, l);         
-const testTree: Tree<number> = new Branch(b, new Branch(new Leaf(-10), new Leaf(-30)));
-
-
 // Size: Tree<A> -> number
 // Size counts the number of branches and leaves
 export const size = <A>(tree: Tree<A>): number => {
