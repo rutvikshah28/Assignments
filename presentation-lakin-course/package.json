@@ -1,0 +1,15 @@
+{
+  "name": "presentation-lakin-course",
+  "version": "1.0.0",
+  "description": "Presentation documents for Lakin's Composable Software course.",
+  "main": "quokka.ts",
+  "scripts": {
+    "test": "node quokka.js"
+  },
+  "author": "Rutvik Shah",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.6.6"
+  },
+  "type": "module"
+}
