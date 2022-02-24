@@ -46,3 +46,4 @@ path: /QuestionThree
 tsc *.ts
 node test.js
 ```
+4. I have published the library on [npm](https://www.npmjs.com/package/task-three-tree-lib) aswell.
