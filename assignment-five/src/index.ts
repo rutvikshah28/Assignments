@@ -1,5 +1,6 @@
-import { defer, repeat } from "rxjs";
+import * as RX from "rxjs";
 import inquirer from "inquirer";
+import process from "process";
 
 /*
   FRP - unidirectional flow.
@@ -45,36 +46,121 @@ type State = {
 
 }
 
-const state: State = {
-  firstName: "Enter First Name",
-  lastName: "Enter Last Name",
-  age: 0,
-  email: "example@eg.com"
+const initialState: State = {
+  firstName: "Rutvik",
+  lastName: "Shah",
+  age: 22,
+  email: "test@test.com"
 }
 
-// ---------- UPDATE: State -> Command -> State ----------
+let currState: State = initialState;
 
+// // ---------- UPDATE: State -> Command -> State ----------
 
+const setState = (changes: Partial<State>) => {
+  currState = {...currState, ...changes};
+}
+
+const printState = (): string => {
+  return `First Name: ${currState.firstName}\nLast Name: ${currState.lastName}\nAge: ${currState.age}\nEmail: ${currState.email}\n`
+}
+
+const writeState = async (type: "q" | "s" | "fn" | "ln" | "a" | "e") => {
+  if(type === "q"){
+    console.log("Quitting...\n");
+  }
+  else if(type === "s"){
+    console.log("Saving...\n");
+  }
+  else if(type === "fn"){
+    const val = await inquirer.prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: `Change First Name:\n`
+      }
+    ]);
+    setState(val)
+  }
+  else if(type === "ln"){
+    const val = await inquirer.prompt([
+      {
+        type: "input",
+        name: "lastName",
+        message: `Change Last Name:\n`
+      }
+    ]);
+    setState(val);
+  }
+  else if(type === "a"){
+    const val = await inquirer.prompt([
+      {
+        type: "input",
+        name: "age",
+        message: `Change Age:\n`
+      }
+    ]);
+    setState(val);
+  }
+  else{
+    const val = await inquirer.prompt([
+      {
+        type: "input",
+        name: "email",
+        message: `Change Email\n`
+      }
+    ]);
+    setState(val);
+  }
+}
 
 // ---------- VIEW: State -> UI ----------
 
 
-
-const processCommand = (cmd: any) => console.log(cmd);
-
-const source = defer(() =>
+const mainForm = RX.defer(() =>
   inquirer.prompt([
     {
       type: "input",
       name: "value",
-      message: `First Name: ${state.firstName}\nLast Name: ${state.lastName}\nAge: ${state.age}\nEmail: ${state.email}\n`,
+      message: `${printState()}Command: 
+                  \n\tEnter "1" to change first name
+                  \n\tEnter "2" to change last name
+                  \n\tEnter "3" to change age
+                  \n\tEnter "4" to change email
+                  \n\tEnter "s" or "S" to submit
+                  \n\tEnter "q" or "Q" to quit\n`,
     },
   ])
 );
 
-const example = source.pipe(repeat());
+const example = mainForm.pipe(RX.repeat());
+let subscription = example.subscribe(cmd => processCommand(cmd));
 
-const subscription = example.subscribe((cmd) => processCommand(cmd));
 
-// Unsubscribe/kill after a duration
-setTimeout(() => subscription.unsubscribe(), 100000);
+const processCommand = async(cmd: any) => {
+  switch(cmd.value.toLowerCase()){
+    case "q" :  writeState("q");
+                subscription.unsubscribe();
+                process.exit();
+    case "s" :  writeState("s");
+                subscription.unsubscribe();
+                process.exit();
+    case "1" :  subscription.unsubscribe();
+                await writeState("fn")
+                subscription = example.subscribe(cmd => processCommand(cmd));
+                break;
+    case "2" :  subscription.unsubscribe();
+                await writeState("ln")
+                subscription = example.subscribe(cmd => processCommand(cmd));
+                break;
+    case "3" :  subscription.unsubscribe();
+                await writeState("a")
+                subscription = example.subscribe(cmd => processCommand(cmd));
+                break;
+    case "4" :  subscription.unsubscribe();
+                await writeState("e")
+                subscription = example.subscribe(cmd => processCommand(cmd));
+                break;
+    default :   console.log("Please enter a valid command\n");
+  }
+}

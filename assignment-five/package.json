@@ -17,7 +17,8 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "go": "ts-node src/index.ts"
+    "go": "ts-node src/index.ts",
+    "start": "node dist/index.js"
   },
   "devDependencies": {
     "@types/inquirer": "^8.1.3",
