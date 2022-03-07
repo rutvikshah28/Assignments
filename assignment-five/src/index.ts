@@ -33,16 +33,15 @@ import process from "process";
 
 */
 
-//---------- MODEL: State ----------
+//---------- MODEL ----------
 
 //Initial State 
 
-//State type has readonly to ensure immutability.
 type State = {
-  readonly firstName: string,
-  readonly lastName: string,
-  readonly age: number,
-  readonly email: string
+  firstName: string,
+  lastName: string,
+  age: number,
+  email: string
 
 }
 
@@ -55,7 +54,7 @@ const initialState: State = {
 
 let currState: State = initialState;
 
-// // ---------- UPDATE: State -> Command -> State ----------
+// // ---------- UPDATE ----------
 
 const setState = (changes: Partial<State>) => {
   currState = {...currState, ...changes};
@@ -114,7 +113,7 @@ const writeState = async (type: "q" | "s" | "fn" | "ln" | "a" | "e") => {
   }
 }
 
-// ---------- VIEW: State -> UI ----------
+// ---------- VIEW ----------
 
 
 const mainForm = RX.defer(() =>
