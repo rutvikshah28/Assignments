@@ -15,3 +15,5 @@ Please click on assignment-four folder or this title to view the code and readme
 
 ## [Assignment 5](https://github.com/rutvikshah28/Assignments/tree/main/assignment-five)
 Please click on assignment-five folder or this title to view the code and readme for further explanation.
+
+## [Assignment 6](https://github.com/rutvikshah28/Assignments/tree/main/assignment-six)
