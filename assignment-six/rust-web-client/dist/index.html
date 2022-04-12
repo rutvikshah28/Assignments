@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head>
+        <title>
+            Chemdle
+        </title>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #242423;
+                color: #FEFFEA;
+                font-size: 30px;
+                text-align: center;
+                overflow: hidden;
+                height: 100vh;
+                width: 100vw;
+                margin: 0;
+                padding: 0;
+            }
+            .mainContainer{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .titleContainer{
+                flex: 1;
+            }
+            .questionContainer{
+                flex: 1; 
+                padding: 1em;
+            }
+            .chemdleContainer{
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+            #answer{
+                padding: 0.6em;
+                margin: 1em;
+                border-radius: 20px;
+                text-align: center;
+                background-color: #333533;
+                border: none;
+                color: #feffea;
+            }
+            #answer:active{
+                border: 2px #feffea solid;
+                transition: 1s;
+            }
+            #submitBtn{
+                padding: 0.6em;
+                margin: 1em;
+                border-radius: 20px;
+                border: none;
+                background-color: #333533;
+                cursor: pointer;
+                color: #feffea;
+                transition: 1s;
+            }
+            #submitBtn:hover{
+                border: 2px #feffea solid;
+                transition: 1s;
+            }
+        </style>
+    
+<link rel="preload" href="/index-512704463452cb58_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/index-512704463452cb58.js"></head>
+    <body>
+    
+<script type="module">import init from '/index-512704463452cb58.js';init('/index-512704463452cb58_bg.wasm');</script><script>(function () {
+    var url = 'ws://' + window.location.host + '/_trunk/ws';
+    var poll_interval = 5000;
+    var reload_upon_connect = () => {
+        window.setTimeout(
+            () => {
+                // when we successfully reconnect, we'll force a
+                // reload (since we presumably lost connection to
+                // trunk due to it being killed, so it will have
+                // rebuilt on restart)
+                var ws = new WebSocket(url);
+                ws.onopen = () => window.location.reload();
+                ws.onclose = reload_upon_connect;
+            },
+            poll_interval);
+    };
+
+    var ws = new WebSocket(url);
+    ws.onmessage = (ev) => {
+        const msg = JSON.parse(ev.data);
+        if (msg.reload) {
+            window.location.reload();
+        }
+    };
+    ws.onclose = reload_upon_connect;
+})()
+</script></body></html>
